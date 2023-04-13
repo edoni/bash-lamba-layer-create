@@ -11,16 +11,20 @@ python3 -m venv venv
 source venv/bin/activate
 
 # Install the specified package using pip
-pip install $package_name -t .
+pip install $package_name -t ./python
+
+cd python
 
 # Remove unnecessary files
 rm -rf *dist-info
+rm -rf venv
+find . -type f -name '*.py[co]' -delete -o -type d -name __pycache__ -delete
 
 # Go back to the parent directory
 cd ..
 
 # Zip the package directory to create the layer
-zip -r ${package_name}_lib_layer.zip $package_name
+zip -r ${package_name}_lib_layer.zip python
 
 # Deactivate the virtual environment
 deactivate
